@@ -1,0 +1,21 @@
+
+		public class ContactDAL
+		{
+			private static readonly object syncLock = new object();
+      private DAL dal;
+            private DAL DAL
+            {
+              get
+              {
+                if (dal == null)
+                {
+                  lock (syncLock)
+                  {
+                    if (dal == null)
+                      dal = new DAL();
+                  }
+                }
+                return dal;	
+              }
+            }
+    }
