@@ -1,0 +1,59 @@
+    public interface IObserver
+    {
+        //void Notify(Keys key, IntPtr lParam);
+        //void Subscribe(Action<Keys, IntPtr> MakeActionOnEvent);
+        //void UnSubscribe(Action<Keys, IntPtr> MakeActionOnEvent);
+        void Notify();
+        void Subscribe(Action MakeActionOnEvent);
+        void UnSubscribe(Action MakeActionOnEvent);
+    }
+
+    public class Life : IObserver
+    {
+        public void LifeCheck(int lifeAmount)
+        {
+            //do stuff....
+            if (lifeAmount < 1000)
+                Notify();
+            //do stuff....
+        }
+
+        private Action OnResqueEventHappen;
+        public void Notify()
+        {
+            //OnResqueEventHappen(key , lParam);
+            OnResqueEventHappen();
+        }
+        //public void Subscribe(Action<Keys, IntPtr> MakeActionOnEvent)
+        //{
+        //    this.OnResqueEventHappen += MakeActionOnEvent;
+        //}
+        //public void UnSubscribe(Action<Keys, IntPtr> MakeActionOnEvent)
+        //{
+        //    this.OnResqueEventHappen -= MakeActionOnEvent;
+        //}
+        public void Subscribe(Action MakeActionOnEvent)
+        {
+            this.OnResqueEventHappen += MakeActionOnEvent;
+        }
+        public void UnSubscribe(Action MakeActionOnEvent)
+        {
+            this.OnResqueEventHappen -= MakeActionOnEvent;
+        }
+    }
+
+    public class MyBuild
+    {
+        Life buildLife = new Life();
+        public MyBuild()
+        {
+            buildLife.Subscribe(OnLowLifeMakeActions);
+        }
+
+        private void OnLowLifeMakeActions()
+        {
+            Console.WriteLine("Danger! low life");
+            //Do stuff - send keys etc...
+        }
+
+    }
