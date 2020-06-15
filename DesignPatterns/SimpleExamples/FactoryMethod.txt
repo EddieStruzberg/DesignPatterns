@@ -1,0 +1,63 @@
+   class FactoryMethod
+    {
+        static void ExampleOfUse(string[] args)
+        {
+            ICustomersFactory ClioWorkers = FactoryUse.createTable(WorkPlace.ClioWorkers);
+            ICustomersFactory SkyLabWorkers = FactoryUse.createTable(WorkPlace.SkyLabWorkers);
+            PrintWorkers(SkyLabWorkers);
+        }
+
+        public static void PrintWorkers(ICustomersFactory CompanyWorkers)
+        {
+            CompanyWorkers.ShowWorkers(new List<object>());
+        }
+    }
+
+    public interface ICustomersFactory
+    {
+        void ShowWorkers(List<object> Customers);
+    }
+
+    class SkyLabWorkers : ICustomersFactory
+    {
+        public void ShowWorkers(List<object> Customers)
+        {
+            Console.WriteLine("SkyLab Workers");
+            foreach (var Customer in Customers)
+            {
+                Console.WriteLine(Customer.ToString());
+            }
+
+        }
+    }
+    class ClioWorkers : ICustomersFactory
+    {
+        public void ShowWorkers(List<object> Customers)
+        {
+            Console.WriteLine("Clio Workers");
+            foreach (var Customer in Customers)
+            {
+                Console.WriteLine(Customer.ToString());
+            }
+        }
+    }
+    public class FactoryUse
+    {
+        public static ICustomersFactory createTable(WorkPlace wantedWorkPlace)
+        {
+            if (wantedWorkPlace == WorkPlace.ClioWorkers)
+            {
+                return new ClioWorkers();
+            }
+            else if (wantedWorkPlace == WorkPlace.SkyLabWorkers)
+            {
+                return new SkyLabWorkers();
+            }
+            return null;
+        }
+    }
+    public enum WorkPlace
+    {
+        ClioWorkers = 1,
+        SkyLabWorkers = 2
+    }
